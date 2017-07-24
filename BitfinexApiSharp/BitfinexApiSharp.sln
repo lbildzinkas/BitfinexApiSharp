@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1B69AE63-D58A-496C-B178-149F42EC4985}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitfinexApiSharp.Tests", "BitfinexApiSharp.Tests\BitfinexApiSharp.Tests.csproj", "{9A1F42FE-8527-43D0-961D-F6E63D15F7FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitfinexApiSharp", "BitfinexApiSharp\BitfinexApiSharp.csproj", "{7563FE2B-7513-44B9-9724-EDE6C0EA7EA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitfinexClientSharp.ExampleClient", "BitfinexClientSharp.ExampleClient\BitfinexClientSharp.ExampleClient.csproj", "{50D51D7A-9E7A-4DEA-829B-5FDF4B7D99A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A1F42FE-8527-43D0-961D-F6E63D15F7FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A1F42FE-8527-43D0-961D-F6E63D15F7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A1F42FE-8527-43D0-961D-F6E63D15F7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A1F42FE-8527-43D0-961D-F6E63D15F7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7563FE2B-7513-44B9-9724-EDE6C0EA7EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7563FE2B-7513-44B9-9724-EDE6C0EA7EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7563FE2B-7513-44B9-9724-EDE6C0EA7EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7563FE2B-7513-44B9-9724-EDE6C0EA7EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50D51D7A-9E7A-4DEA-829B-5FDF4B7D99A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50D51D7A-9E7A-4DEA-829B-5FDF4B7D99A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50D51D7A-9E7A-4DEA-829B-5FDF4B7D99A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50D51D7A-9E7A-4DEA-829B-5FDF4B7D99A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A1F42FE-8527-43D0-961D-F6E63D15F7FD} = {1B69AE63-D58A-496C-B178-149F42EC4985}
+	EndGlobalSection
+EndGlobal
