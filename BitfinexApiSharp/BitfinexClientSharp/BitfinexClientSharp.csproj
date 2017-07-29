@@ -47,9 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\EventType.cs" />
+    <Compile Include="Dtos\Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CryptoPair.cs" />
-    <Compile Include="WSocket\OperationType.cs" />
+    <Compile Include="Dtos\Pair.cs" />
+    <Compile Include="Dtos\ChannelType.cs" />
     <Compile Include="WSocket\WSocketClient.cs" />
   </ItemGroup>
   <ItemGroup>

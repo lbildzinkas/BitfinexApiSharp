@@ -1,8 +1,6 @@
-﻿using System.ComponentModel;
-
-namespace BitfinexClientSharp
+﻿namespace BitfinexClientSharp.Dtos
 {
-    public enum CryptoPair
+    public enum Pair
     {
         BTCUSD,
         ETHUSD,
