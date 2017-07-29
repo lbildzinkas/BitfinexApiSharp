@@ -2,7 +2,7 @@
 
 namespace BitfinexClientSharp
 {
-    public enum SupportedPairs
+    public enum CryptoPair
     {
         BTCUSD,
         ETHUSD,
