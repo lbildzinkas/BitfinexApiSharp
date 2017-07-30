@@ -53,8 +53,12 @@
     <Compile Include="Dtos\Pair.cs" />
     <Compile Include="Dtos\ChannelType.cs" />
     <Compile Include="Dtos\IResponse.cs" />
-    <Compile Include="WSocket\IResponseAdapter.cs" />
-    <Compile Include="WSocket\IResponseAdapterFactory.cs" />
+    <Compile Include="WSocket\Adapters\BookResponseAdapter.cs" />
+    <Compile Include="WSocket\Adapters\TickerResponseAdapter.cs" />
+    <Compile Include="WSocket\Adapters\IResponseAdapter.cs" />
+    <Compile Include="WSocket\Adapters\IResponseAdapterFactory.cs" />
+    <Compile Include="WSocket\Adapters\TradesResponseAdapter.cs" />
+    <Compile Include="WSocket\Adapters\WSocketResponseAdapterFactory.cs" />
     <Compile Include="WSocket\WSocketClient.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BitfinexClientSharp.Dtos;
+using BitfinexClientSharp.WSocket.Adapters;
 using Newtonsoft.Json;
 
 namespace BitfinexClientSharp.WSocket

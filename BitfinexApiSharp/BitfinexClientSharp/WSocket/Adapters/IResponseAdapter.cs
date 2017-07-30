@@ -1,6 +1,6 @@
 using BitfinexClientSharp.Dtos;
 
-namespace BitfinexClientSharp.WSocket
+namespace BitfinexClientSharp.WSocket.Adapters
 {
     public interface IResponseAdapter
     {
