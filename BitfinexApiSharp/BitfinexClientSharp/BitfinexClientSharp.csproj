@@ -52,6 +52,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dtos\Pair.cs" />
     <Compile Include="Dtos\ChannelType.cs" />
+    <Compile Include="Dtos\IResponse.cs" />
+    <Compile Include="WSocket\IResponseAdapter.cs" />
+    <Compile Include="WSocket\IResponseAdapterFactory.cs" />
     <Compile Include="WSocket\WSocketClient.cs" />
   </ItemGroup>
   <ItemGroup>

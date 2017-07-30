@@ -19,8 +19,8 @@ namespace BitfinexClientSharp.Example
             var client = new WSocketClient("wss://api.bitfinex.com/ws/2", delay);
 
             client.TickerSubscribe(Pair.BTCUSD, LogStatus1);
-            client.BookSubscribe(Pair.BTCUSD, LogStatus1);
-            client.TradeSubscribe(Pair.BTCUSD, LogStatus1);
+            //client.BookSubscribe(Pair.BTCUSD, LogStatus1);
+            //client.TradeSubscribe(Pair.BTCUSD, LogStatus1);
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();

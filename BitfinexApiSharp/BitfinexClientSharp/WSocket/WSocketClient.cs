@@ -11,35 +11,36 @@ namespace BitfinexClientSharp.WSocket
 {
     public class WSocketClient
     {
+        private readonly IResponseAdapterFactory _adapterFactory;
         private readonly string _serverUrl;
         private readonly ConcurrentDictionary<(Pair c, ChannelType o), ClientWebSocket> _wsClients;
         private int _receiveChunkSize = 1024;
         private readonly TimeSpan _tickerDelay;
         private readonly UTF8Encoding encoder = new UTF8Encoding();
 
-        public WSocketClient(string serverUrl, TimeSpan tickerDelay)
+        public WSocketClient(IResponseAdapterFactory adapterFactory, string serverUrl, TimeSpan tickerDelay)
         {
+            _adapterFactory = adapterFactory;
             _serverUrl = serverUrl;
             _tickerDelay = tickerDelay;
-            _wsClients = new ConcurrentDictionary<(Pair c, ChannelType o), ClientWebSocket>();
         }
 
-        public async Task TickerSubscribe(Pair pair, Action<byte[]> onMessageReceived)
+        public async Task TickerSubscribe(Pair pair, Action<IResponse> onMessageReceived)
         {
             await Subscribe(ChannelType.Ticker, pair, onMessageReceived);
         }
 
-        public async Task TradeSubscribe(Pair pair, Action<byte[]> onMessageReceived)
+        public async Task TradeSubscribe(Pair pair, Action<IResponse> onMessageReceived)
         {
             await Subscribe(ChannelType.Trades, pair, onMessageReceived);
         }
 
-        public async Task BookSubscribe(Pair pair, Action<byte[]> onMessageReceived)
+        public async Task BookSubscribe(Pair pair, Action<IResponse> onMessageReceived)
         {
             await Subscribe(ChannelType.Book, pair, onMessageReceived);
         }
 
-        private async Task Subscribe(ChannelType type, Pair pair, Action<byte[]> onMessageReceived)
+        private async Task Subscribe(ChannelType channel, Pair pair, Action<IResponse> onMessageReceived)
         {
             ClientWebSocket webSocket = null;
 
@@ -47,16 +48,13 @@ namespace BitfinexClientSharp.WSocket
             {
                 webSocket = new ClientWebSocket();
 
-                if (_wsClients.TryAdd((pair, type), webSocket))
+                if (_wsClients.TryAdd((pair, channel), webSocket))
                 {
+                    var responseAdapter = _adapterFactory.GetAdapter(channel); 
                     await webSocket.ConnectAsync(new Uri(_serverUrl), CancellationToken.None).ConfigureAwait(false);
-                    await Task.WhenAll(Receive(webSocket, onMessageReceived),
-                        Send(type, pair, webSocket, onMessageReceived)).ConfigureAwait(false);
+                    await Task.WhenAll(Receive(pair, webSocket, onMessageReceived, responseAdapter),
+                        Send(channel, pair, webSocket, onMessageReceived, responseAdapter)).ConfigureAwait(false);
                 }
-            }
-            catch (Exception ex)
-            {
-                //todo: log
             }
             finally
             {
@@ -64,7 +62,7 @@ namespace BitfinexClientSharp.WSocket
             }
         }
 
-        private async Task Send(ChannelType channel, Pair pair, ClientWebSocket webSocket, Action<byte[]> onMessageReceived)
+        private async Task Send(ChannelType channel, Pair pair, ClientWebSocket webSocket, Action<IResponse> onMessageReceived, IResponseAdapter responseAdapter)
         {
             var request = new Request(){Event = EventType.subscribe,  Channel = channel, Pair = pair };
             var jsonRequest = JsonConvert.SerializeObject(request);
@@ -73,12 +71,12 @@ namespace BitfinexClientSharp.WSocket
 
             while (webSocket.State == WebSocketState.Open)
             {
-                onMessageReceived(buffer);
+                onMessageReceived(responseAdapter.Adapt(pair, buffer));
                 await Task.Delay(_tickerDelay);
             }
         }
 
-        private async Task Receive(ClientWebSocket webSocket, Action<byte[]> onMessageReceived)
+        private async Task Receive(Pair pair, ClientWebSocket webSocket, Action<IResponse> onMessageReceived, IResponseAdapter responseAdapter)
         {
             var buffer = new byte[_receiveChunkSize];
             while (webSocket.State == WebSocketState.Open)
@@ -90,7 +88,7 @@ namespace BitfinexClientSharp.WSocket
                 }
                 else
                 {
-                    onMessageReceived(buffer);
+                    onMessageReceived(responseAdapter.Adapt(pair, buffer));
                 }
             }
         }
