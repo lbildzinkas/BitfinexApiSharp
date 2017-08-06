@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\EventType.cs" />
+    <Compile Include="Dtos\HeaderResponse.cs" />
     <Compile Include="Dtos\Request.cs" />
     <Compile Include="Dtos\TickerArrayPositions.cs" />
     <Compile Include="Dtos\TickerResponse.cs" />

@@ -10,14 +10,13 @@ namespace BitfinexClientSharp.Example
     class Program
     {
         private static object consoleLock = new object();
-        private static readonly TimeSpan delay = TimeSpan.FromMilliseconds(30000);
         private static UTF8Encoding encoder = new UTF8Encoding();
 
         static void Main(string[] args)
         {
             Thread.Sleep(1000);
 
-            var client = new WSocketClient(new WSocketResponseAdapterFactory(new ResponseValidator()),  "wss://api.bitfinex.com/ws/2", delay);
+            var client = new WSocketClient(new WSocketResponseAdapterFactory(new ResponseValidator()),  "wss://api.bitfinex.com/ws/2");
 
             client.TickerSubscribe(Pair.BTCUSD, LogStatusTicker);
 

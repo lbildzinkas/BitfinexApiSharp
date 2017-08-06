@@ -16,19 +16,18 @@ namespace BitfinexClientSharp.WSocket
         private readonly string _serverUrl;
         private readonly ConcurrentDictionary<(Pair c, ChannelType o), ClientWebSocket> _wsClients;
         private int _receiveChunkSize = 1024;
-        private readonly TimeSpan _tickerDelay;
+        private readonly TimeSpan _checkStatusDelay = TimeSpan.FromMilliseconds(100000);
         private readonly Encoding _encoder = new UTF8Encoding();
         
-        public WSocketClient(IResponseAdapterFactory adapterFactory, string serverUrl, TimeSpan tickerDelay)
+        public WSocketClient(IResponseAdapterFactory adapterFactory, string serverUrl)
         {
             _adapterFactory = adapterFactory;
             _serverUrl = serverUrl;
-            _tickerDelay = tickerDelay;
             _wsClients = new ConcurrentDictionary<(Pair c, ChannelType o), ClientWebSocket>();
         }
         
-        public WSocketClient(IResponseAdapterFactory adapterFactory, string serverUrl, TimeSpan tickerDelay, Encoding encoder) 
-            : this(adapterFactory, serverUrl, tickerDelay)
+        public WSocketClient(IResponseAdapterFactory adapterFactory, string serverUrl, Encoding encoder) 
+            : this(adapterFactory, serverUrl)
         {
             _encoder = encoder;
         }
@@ -81,7 +80,7 @@ namespace BitfinexClientSharp.WSocket
             while (webSocket.State == WebSocketState.Open)
             {
                 onMessageReceived(responseAdapter.Adapt(pair, buffer));
-                await Task.Delay(_tickerDelay);
+                await Task.Delay(_checkStatusDelay);
             }
         }
 

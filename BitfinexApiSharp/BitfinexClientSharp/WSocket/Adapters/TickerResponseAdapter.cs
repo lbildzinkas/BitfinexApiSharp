@@ -24,7 +24,7 @@ namespace BitfinexClientSharp.WSocket.Adapters
             var responseString = Encoder.GetString(buffer);
             responseString = responseString.Replace("[", string.Empty).Replace("]", string.Empty).Replace("\0", string.Empty);
             var valuesArray = responseString.Split(',');
-            TickerResponse response = null;
+            IResponse response = null;
 
             if (!_responseValidator.IsHeaderMsg(responseString))
             {
@@ -65,6 +65,14 @@ namespace BitfinexClientSharp.WSocket.Adapters
                     Volume = float.TryParse(valuesArray[TickerArrayPositions.VolumePosition], out float volume)
                         ? volume
                         : float.MinValue
+                };
+            }
+            else
+            {
+                response = new HeaderResponse()
+                {
+                    Pair = pair,
+                    Msg = responseString
                 };
             }
 
