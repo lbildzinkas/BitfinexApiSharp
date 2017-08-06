@@ -24,6 +24,7 @@ namespace BitfinexClientSharp.WSocket
             _adapterFactory = adapterFactory;
             _serverUrl = serverUrl;
             _tickerDelay = tickerDelay;
+            _wsClients = new ConcurrentDictionary<(Pair c, ChannelType o), ClientWebSocket>();
         }
         
         public WSocketClient(IResponseAdapterFactory adapterFactory, string serverUrl, TimeSpan tickerDelay, Encoding encoder) 

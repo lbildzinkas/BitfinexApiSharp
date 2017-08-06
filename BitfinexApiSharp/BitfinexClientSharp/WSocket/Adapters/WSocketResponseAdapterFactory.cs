@@ -10,21 +10,22 @@ namespace BitfinexClientSharp.WSocket.Adapters
     {
         private readonly Dictionary<ChannelType, IResponseAdapter> _factoryDictionary;
 
-        public WSocketResponseAdapterFactory()
+        public WSocketResponseAdapterFactory(IResponseValidator responseValidator)
         {
             _factoryDictionary = new Dictionary<ChannelType, IResponseAdapter>()
             {
-                {ChannelType.Book, new BookResponseAdapter() },
-                {ChannelType.Ticker, new TickerResponseAdapter() },
-                {ChannelType.Trades, new TradesResponseAdapter() }
+                {ChannelType.Book, new BookResponseAdapter(responseValidator)},
+                {ChannelType.Ticker, new TickerResponseAdapter(responseValidator) },
+                {ChannelType.Trades, new TradesResponseAdapter(responseValidator) }
             };
         }
+
         public IResponseAdapter GetAdapter(ChannelType channel, Encoding encoder)
         {
             IResponseAdapter adapter;
             if(_factoryDictionary.TryGetValue(channel, out adapter))
             {
-                
+                adapter.Encoder = encoder;
                 return adapter;
             }
 

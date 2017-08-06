@@ -17,26 +17,25 @@ namespace BitfinexClientSharp.Example
         {
             Thread.Sleep(1000);
 
-            var client = new WSocketClient(new WSocketResponseAdapterFactory(),  "wss://api.bitfinex.com/ws/2", delay);
+            var client = new WSocketClient(new WSocketResponseAdapterFactory(new ResponseValidator()),  "wss://api.bitfinex.com/ws/2", delay);
 
-            //client.TickerSubscribe(Pair.BTCUSD, LogStatus1);
-            //client.BookSubscribe(Pair.BTCUSD, LogStatus1);
-            //client.TradeSubscribe(Pair.BTCUSD, LogStatus1);
+            client.TickerSubscribe(Pair.BTCUSD, LogStatusTicker);
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
 
-        private static void LogStatus1(byte[] buffer)
+        private static void LogStatusTicker(IResponse obj)
         {
             lock (consoleLock)
             {
-                Console.ForegroundColor =  ConsoleColor.Green;
-
-                Console.WriteLine(encoder.GetString(buffer));
+                Console.ForegroundColor = ConsoleColor.Green;
+                var ticker = (TickerResponse) obj;
+                Console.WriteLine($"{ticker?.Pair} - {ticker?.LastPrice}");
 
                 Console.ResetColor();
             }
         }
+
     }
 }
