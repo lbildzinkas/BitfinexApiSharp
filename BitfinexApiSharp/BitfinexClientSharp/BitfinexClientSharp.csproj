@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="Dtos\EventType.cs" />
     <Compile Include="Dtos\Request.cs" />
+    <Compile Include="Dtos\TickerArrayPositions.cs" />
+    <Compile Include="Dtos\TickerResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dtos\Pair.cs" />
     <Compile Include="Dtos\ChannelType.cs" />

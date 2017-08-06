@@ -17,13 +17,19 @@ namespace BitfinexClientSharp.WSocket
         private readonly ConcurrentDictionary<(Pair c, ChannelType o), ClientWebSocket> _wsClients;
         private int _receiveChunkSize = 1024;
         private readonly TimeSpan _tickerDelay;
-        private readonly UTF8Encoding encoder = new UTF8Encoding();
-
+        private readonly Encoding _encoder = new UTF8Encoding();
+        
         public WSocketClient(IResponseAdapterFactory adapterFactory, string serverUrl, TimeSpan tickerDelay)
         {
             _adapterFactory = adapterFactory;
             _serverUrl = serverUrl;
             _tickerDelay = tickerDelay;
+        }
+        
+        public WSocketClient(IResponseAdapterFactory adapterFactory, string serverUrl, TimeSpan tickerDelay, Encoding encoder) 
+            : this(adapterFactory, serverUrl, tickerDelay)
+        {
+            _encoder = encoder;
         }
 
         public async Task TickerSubscribe(Pair pair, Action<IResponse> onMessageReceived)
@@ -43,6 +49,7 @@ namespace BitfinexClientSharp.WSocket
 
         private async Task Subscribe(ChannelType channel, Pair pair, Action<IResponse> onMessageReceived)
         {
+            //todo: create an adapter to remove this dependency from web socket client
             ClientWebSocket webSocket = null;
 
             try
@@ -51,7 +58,7 @@ namespace BitfinexClientSharp.WSocket
 
                 if (_wsClients.TryAdd((pair, channel), webSocket))
                 {
-                    var responseAdapter = _adapterFactory.GetAdapter(channel); 
+                    var responseAdapter = _adapterFactory.GetAdapter(channel, _encoder); 
                     await webSocket.ConnectAsync(new Uri(_serverUrl), CancellationToken.None).ConfigureAwait(false);
                     await Task.WhenAll(Receive(pair, webSocket, onMessageReceived, responseAdapter),
                         Send(channel, pair, webSocket, onMessageReceived, responseAdapter)).ConfigureAwait(false);
@@ -67,7 +74,7 @@ namespace BitfinexClientSharp.WSocket
         {
             var request = new Request(){Event = EventType.subscribe,  Channel = channel, Pair = pair };
             var jsonRequest = JsonConvert.SerializeObject(request);
-            var buffer = encoder.GetBytes(jsonRequest);
+            var buffer = _encoder.GetBytes(jsonRequest);
             await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None).ConfigureAwait(false);
 
             while (webSocket.State == WebSocketState.Open)

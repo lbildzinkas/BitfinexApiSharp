@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using BitfinexClientSharp.Dtos;
 
 namespace BitfinexClientSharp.WSocket.Adapters
@@ -18,11 +19,12 @@ namespace BitfinexClientSharp.WSocket.Adapters
                 {ChannelType.Trades, new TradesResponseAdapter() }
             };
         }
-        public IResponseAdapter GetAdapter(ChannelType channel)
+        public IResponseAdapter GetAdapter(ChannelType channel, Encoding encoder)
         {
             IResponseAdapter adapter;
             if(_factoryDictionary.TryGetValue(channel, out adapter))
             {
+                
                 return adapter;
             }
 
