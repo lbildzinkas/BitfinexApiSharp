@@ -30,41 +30,41 @@ namespace BitfinexClientSharp.WSocket.Adapters
             {
                 response = new TickerResponse()
                 {
-                    Ask = float.TryParse(valuesArray[TickerArrayPositions.AskPosition], out float ask)
+                    Ask = decimal.TryParse(valuesArray[TickerArrayPositions.AskPosition], out decimal ask)
                         ? ask
-                        : float.MinValue,
-                    AskSize = float.TryParse(valuesArray[TickerArrayPositions.AskSizePosition], out float askSize)
+                        : decimal.MinValue,
+                    AskSize = decimal.TryParse(valuesArray[TickerArrayPositions.AskSizePosition], out decimal askSize)
                         ? askSize
-                        : float.MinValue,
-                    Bid = float.TryParse(valuesArray[TickerArrayPositions.BidSizePosition], out float bid)
+                        : decimal.MinValue,
+                    Bid = decimal.TryParse(valuesArray[TickerArrayPositions.BidSizePosition], out decimal bid)
                         ? bid
-                        : float.MinValue,
-                    BidSize = float.TryParse(valuesArray[TickerArrayPositions.BidSizePosition], out float bidSize)
+                        : decimal.MinValue,
+                    BidSize = decimal.TryParse(valuesArray[TickerArrayPositions.BidSizePosition], out decimal bidSize)
                         ? bidSize
-                        : float.MinValue,
+                        : decimal.MinValue,
                     ChannelId = valuesArray[TickerArrayPositions.ChannelIdPosition] ?? string.Empty,
-                    DailyChange = float.TryParse(valuesArray[TickerArrayPositions.DaiyChangePosition],
-                        out float dailyChange)
+                    DailyChange = decimal.TryParse(valuesArray[TickerArrayPositions.DaiyChangePosition],
+                        out decimal dailyChange)
                         ? dailyChange
-                        : float.MinValue,
+                        : decimal.MinValue,
                     DailyChangePercentage =
-                        float.TryParse(valuesArray[TickerArrayPositions.DailyChangePercentagePosition],
-                            out float dailyChangePercentage)
+                        decimal.TryParse(valuesArray[TickerArrayPositions.DailyChangePercentagePosition],
+                            out decimal dailyChangePercentage)
                             ? dailyChangePercentage
-                            : float.MinValue,
-                    High = float.TryParse(valuesArray[TickerArrayPositions.HighPosition], out float highPosition)
+                            : decimal.MinValue,
+                    High = decimal.TryParse(valuesArray[TickerArrayPositions.HighPosition], out decimal highPosition)
                         ? highPosition
-                        : float.MinValue,
-                    LastPrice = float.TryParse(valuesArray[TickerArrayPositions.LastPricePosition], out float lastPrice)
+                        : decimal.MinValue,
+                    LastPrice = decimal.TryParse(valuesArray[TickerArrayPositions.LastPricePosition], out decimal lastPrice)
                         ? lastPrice
-                        : float.MinValue,
-                    Low = float.TryParse(valuesArray[TickerArrayPositions.LowPosition], out float low)
+                        : decimal.MinValue,
+                    Low = decimal.TryParse(valuesArray[TickerArrayPositions.LowPosition], out decimal low)
                         ? low
-                        : float.MinValue,
+                        : decimal.MinValue,
                     Pair = pair,
-                    Volume = float.TryParse(valuesArray[TickerArrayPositions.VolumePosition], out float volume)
+                    Volume = decimal.TryParse(valuesArray[TickerArrayPositions.VolumePosition], out decimal volume)
                         ? volume
-                        : float.MinValue
+                        : decimal.MinValue
                 };
             }
             else
