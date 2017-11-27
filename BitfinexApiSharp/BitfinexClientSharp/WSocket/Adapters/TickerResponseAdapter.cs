@@ -1,5 +1,6 @@
-﻿using System.Text;
+using System.Text;
 using BitfinexClientSharp.Dtos;
+using System.Globalization;
 
 namespace BitfinexClientSharp.WSocket.Adapters
 {
@@ -11,7 +12,7 @@ namespace BitfinexClientSharp.WSocket.Adapters
         {
             _responseValidator = responseValidator;
         }
-        
+
         public TickerResponseAdapter(IResponseValidator responseValidator, Encoding encoder) : this(responseValidator)
         {
             Encoder = encoder;
@@ -30,39 +31,39 @@ namespace BitfinexClientSharp.WSocket.Adapters
             {
                 response = new TickerResponse()
                 {
-                    Ask = decimal.TryParse(valuesArray[TickerArrayPositions.AskPosition], out decimal ask)
+                    Ask = decimal.TryParse(valuesArray[TickerArrayPositions.AskPosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"), out decimal ask)
                         ? ask
                         : decimal.MinValue,
-                    AskSize = decimal.TryParse(valuesArray[TickerArrayPositions.AskSizePosition], out decimal askSize)
+                    AskSize = decimal.TryParse(valuesArray[TickerArrayPositions.AskSizePosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"), out decimal askSize)
                         ? askSize
                         : decimal.MinValue,
-                    Bid = decimal.TryParse(valuesArray[TickerArrayPositions.BidSizePosition], out decimal bid)
+                    Bid = decimal.TryParse(valuesArray[TickerArrayPositions.BidSizePosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"), out decimal bid)
                         ? bid
                         : decimal.MinValue,
-                    BidSize = decimal.TryParse(valuesArray[TickerArrayPositions.BidSizePosition], out decimal bidSize)
+                    BidSize = decimal.TryParse(valuesArray[TickerArrayPositions.BidSizePosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"), out decimal bidSize)
                         ? bidSize
                         : decimal.MinValue,
                     ChannelId = valuesArray[TickerArrayPositions.ChannelIdPosition] ?? string.Empty,
-                    DailyChange = decimal.TryParse(valuesArray[TickerArrayPositions.DaiyChangePosition],
+                    DailyChange = decimal.TryParse(valuesArray[TickerArrayPositions.DaiyChangePosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"),
                         out decimal dailyChange)
                         ? dailyChange
                         : decimal.MinValue,
                     DailyChangePercentage =
-                        decimal.TryParse(valuesArray[TickerArrayPositions.DailyChangePercentagePosition],
+                        decimal.TryParse(valuesArray[TickerArrayPositions.DailyChangePercentagePosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"),
                             out decimal dailyChangePercentage)
                             ? dailyChangePercentage
                             : decimal.MinValue,
-                    High = decimal.TryParse(valuesArray[TickerArrayPositions.HighPosition], out decimal highPosition)
+                    High = decimal.TryParse(valuesArray[TickerArrayPositions.HighPosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"), out decimal highPosition)
                         ? highPosition
                         : decimal.MinValue,
-                    LastPrice = decimal.TryParse(valuesArray[TickerArrayPositions.LastPricePosition], out decimal lastPrice)
+                    LastPrice = decimal.TryParse(valuesArray[TickerArrayPositions.LastPricePosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"), out decimal lastPrice)
                         ? lastPrice
                         : decimal.MinValue,
-                    Low = decimal.TryParse(valuesArray[TickerArrayPositions.LowPosition], out decimal low)
+                    Low = decimal.TryParse(valuesArray[TickerArrayPositions.LowPosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"), out decimal low)
                         ? low
                         : decimal.MinValue,
                     Pair = pair,
-                    Volume = decimal.TryParse(valuesArray[TickerArrayPositions.VolumePosition], out decimal volume)
+                    Volume = decimal.TryParse(valuesArray[TickerArrayPositions.VolumePosition], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"), out decimal volume)
                         ? volume
                         : decimal.MinValue
                 };
